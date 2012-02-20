@@ -21,8 +21,9 @@ public class Replica {
 
 			GCMAdaptor gcm = new JGroupAdaptor("__test_cluster",
 					"org.ssor.test.Configurator", SSORSampleTest.initMethod);
-
-			gcm.setPath("D:/flush-udp.xml");
+			
+			gcm.setPath(Replica.class.getProtectionDomain()
+		            .getCodeSource().getLocation() + "flush-udp.xml");
 			new JGroupReceiver(gcm);
 
 			test = (ITest) gcm.getGroup().getProxyFactory().get(
