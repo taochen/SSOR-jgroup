@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SSOR xmlns="http://www.example.org/ssor"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/ssor ssor.xsd">
+
+	<group name="test_group" interests="1">
+
+		<redundantService name="rs" class="" interface="" >
+			<arguments>
+				<element type="2" />
+			</arguments>
+		</redundantService>
+		<atomicService name="as1" class="" interface="" isFIFO="true" />
+		<atomicService name="as2" class="2" interface="2"
+			isFIFO="true">
+			<service name="rs" />
+		</atomicService>
+		<atomicService name="as3" class="2" interface="2"
+			isFIFO="true">
+			<arguments>
+				<element type="2" />
+			</arguments>
+			<concurrentDeliverableServices>
+				<service name="" />
+			</concurrentDeliverableServices>
+		</atomicService>
+  
+
+		<compositeService name="cs" class="2" interface="2">
+			<arguments>
+				<element type="2" />
+			</arguments>
+			<service name="as1" />
+			<service name="as2" />
+		</compositeService>
+
+
+
+		<region id="1" scope="conflict-region">
+			<service name="as1" />
+			<service name="as2" />
+		</region>
+
+
+		<region id="2" scope="conflict-region">
+			<service name="as3" />
+		</region>
+	</group>
+</SSOR>
