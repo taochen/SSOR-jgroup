@@ -54,5 +54,11 @@
 			<version>1.5.10</version>
 			<scope>compile</scope>
 		</dependency>
+	<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.12</version>
+			<scope>test</scope>
+		</dependency>
   </dependencies>
 </project>
