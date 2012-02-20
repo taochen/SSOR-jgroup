@@ -23,7 +23,7 @@ public class Replica {
 					"org.ssor.test.Configurator", SSORSampleTest.initMethod);
 			
 			gcm.setPath(Replica.class.getProtectionDomain()
-		            .getCodeSource().getLocation() + "flush-udp.xml");
+		            .getCodeSource().getLocation() + "flush-udp-stream-ST.xml");
 			new JGroupReceiver(gcm);
 
 			test = (ITest) gcm.getGroup().getProxyFactory().get(
