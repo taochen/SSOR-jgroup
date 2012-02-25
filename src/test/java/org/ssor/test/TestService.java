@@ -36,18 +36,11 @@ public class TestService implements ITest{
 		//if(Sharing.iund != null)
 			//x = Sharing.iund.random();
 	
-		
-		for(int l=0;l<70000000;l++)
+		long max = Long.parseLong("999999999");
+		//for(int l=0;l<50000;l++)
+		   // x++; 
+		for(long l=0;l<max;l++)
 		    x++; 
-			
-		
-		for(int l=0;l<70000000;l++)
-		    x++; 
-		
-		for(int l=0;l<70000000;l++)
-		    x++; 
-	
-	
 		
 		//Sharing.number = k;
 		//x = ((IUnd)ProxyFactory.get(null, UndService.class)).random();
@@ -72,17 +65,12 @@ public class TestService implements ITest{
 	@Override
 	public int work(int i, int o) {
 		int x = i;
+		long max = Long.parseLong("999999999");
 		//for(int l=0;l<50000;l++)
 		   // x++; 
-		for(int l=0;l<70000000;l++)
-		    x++; 
-			
-		for(int l=0;l<70000000;l++)
+		for(long l=0;l<max;l++)
 		    x++; 
 		
-		for(int l=0;l<70000000;l++)
-		    x++;  
-	
 		
 		//Sharing.number = o;
 		//x = ((IUnd)ProxyFactory.get(null, UndService.class)).random();
@@ -95,13 +83,10 @@ public class TestService implements ITest{
 		int x = i;
 		//for(int l=0;l<50000;l++)
 		   // x++; 
-		for(int l=0;l<70000000;l++)
-		    x++; 
-			
-		for(int l=0;l<70000000;l++)
-		    x++; 
-		
-		for(int l=0;l<70000000;l++)
+		long max = Long.parseLong("999999999");
+		//for(int l=0;l<50000;l++)
+		   // x++; 
+		for(long l=0;l<max;l++)
 		    x++; 
 
 		 

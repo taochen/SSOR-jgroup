@@ -20,10 +20,10 @@ public class Replica {
 			Environment.ENABLE_CHANGE_FIFO = false;
 
 			GCMAdaptor gcm = new JGroupAdaptor("__test_cluster",
-					"org.ssor.test.Configurator", SSORSampleTest.initMethod);
+					"org.ssor.test.Configurator", RefactorTest.initMethod);
 			
 			gcm.setPath(Replica.class.getProtectionDomain()
-		            .getCodeSource().getLocation() + "flush-udp-stream-ST.xml");
+		            .getCodeSource().getLocation() + "flush-udp.xml");
 			new JGroupReceiver(gcm);
 
 			test = (ITest) gcm.getGroup().getProxyFactory().get(

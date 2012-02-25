@@ -25,7 +25,8 @@ public class JGroupReceiver extends ReceiverAdapter {
 	private Queue<Address> cache;
 
 	private RegionDistributionSynchronyManager regionDistributionSynchronyManager;
-
+    // For state transfer upon view delivery
+	private State.StateList states;
 	/*
 	 * private ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 100, 3,
 	 * TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(100), new
@@ -48,11 +49,22 @@ public class JGroupReceiver extends ReceiverAdapter {
 	}
 
 	public byte[] getState() {
-
+		
+		while (states == null) {
+			logger.error("Sleep 1 sec then get states");
+			try {
+				Thread.sleep((long)1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+        if (logger.isDebugEnabled()) {
+        	logger.debug("Getting states");
+        }
 		byte[] bytes = null;
 		try {
-			bytes = Util.objectToByteBuffer(adaptor.getGroup()
-					.getServiceManager().getRegionStates());
+			bytes = Util.objectToByteBuffer(states);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,7 +73,9 @@ public class JGroupReceiver extends ReceiverAdapter {
 	}
 
 	public void setState(byte[] bytes) {
-
+        if (logger.isDebugEnabled()) {
+        	logger.debug("Setting states");
+        }
 		State[] states = null;
 		try {
 			states = ((State.StateList) Util.objectFromByteBuffer(bytes))
@@ -75,6 +89,7 @@ public class JGroupReceiver extends ReceiverAdapter {
 
 	@Override
 	public void receive(final Message msg) {
+		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 		// This does not need another thread since it never be blocked
 		final org.ssor.protocol.Message message;
 		try {
@@ -106,12 +121,18 @@ public class JGroupReceiver extends ReceiverAdapter {
 
 	@Override
 	public void viewAccepted(View view) {
-
+		
+        if (logger.isDebugEnabled()) {
+        	logger.debug("View change starts");
+        }
 		try {
 			onViewDelivery(view.getMembers(), view.getViewId().getId());
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
+        if (logger.isErrorEnabled()) {
+        	logger.error("View change finishes");
+        }
 	}
 
 	public void suspect(Address address) {
@@ -186,7 +207,7 @@ public class JGroupReceiver extends ReceiverAdapter {
 		}
 		//regionDistributionSynchronyManager.setUnderViewDelivering(true);
 		//regionDistributionSynchronyManager.tryViewDelivery();
-		System.out.print("view start ****************\n");
+		
 		// Need different thread, otherwise if the waiting delivery of msg has sending operation
 		// then it would deadlock.
 		//new Thread(new Runnable() {
@@ -214,6 +235,7 @@ public class JGroupReceiver extends ReceiverAdapter {
 						cache.add(address);
 						// System.out.print("Add member: " + address.hashCode()
 						// + " ***\n");
+						states = adaptor.getGroup().getServiceManager().getRegionStates();
 						if (logger.isTraceEnabled()) {
 							logger.trace("Add member: " + vector.lastElement());
 						}
@@ -248,7 +270,7 @@ public class JGroupReceiver extends ReceiverAdapter {
 		//}).start();
 
 				//regionDistributionSynchronyManager.setUnderViewDelivering(false);
-		System.out.print("view finish ****************\n");
+
 	}
 
 	private class SendAfterViewDeliveryThread extends Thread {

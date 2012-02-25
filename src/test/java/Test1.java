@@ -23,6 +23,11 @@ public class Test1 {
 	public static long ii = 0;
 	public static Integer count = 0;
 	private static ThreadLocal<Boolean> isExecute = new ThreadLocal<Boolean>();
+	public static void testComplexitymain(String[] args) {
+		long s = System.currentTimeMillis();
+		new TestService().work(1, 1);
+		System.out.print(System.currentTimeMillis() - s + "\n");
+	}
 	/**
 	 * @param args
 	 */

@@ -76,13 +76,13 @@ public class AsynchronousClient {
 			int result;
 			if(i%3 == 0){
 				s = System.currentTimeMillis();
-				result = test.count(100, i);
+				result = test.count(1000000000, i);
 			}else if(i%2 == 0) {
 				s = System.currentTimeMillis();
-				result = test.count(100, i);
+				result = test.count(1000000000, i);
 			} else {
 				s = System.currentTimeMillis();
-				result = test.count(100, i);
+				result = test.count(1000000000, i);
 			}
 
 			// System.out.print("1 Result: " + result + "\n");
